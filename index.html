@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>风铃溪谷 · Windbell Valley</title>
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; color: #344137; background: #f4f1e8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 1440px; padding: 32px 36px 24px; margin: auto; }
+    header { display: flex; gap: 24px; align-items: end; justify-content: space-between; margin-bottom: 22px; }
+    .eyebrow { margin: 0 0 8px; font-size: 11px; letter-spacing: .2em; color: #8a927c; }
+    h1 { margin: 0; font-size: 30px; font-weight: 500; letter-spacing: .07em; }
+    .subtitle { margin: 10px 0 0; color: #828874; font-size: 13px; }
+    nav { display: flex; gap: 4px; flex-shrink: 0; }
+    button { font: inherit; cursor: pointer; border: 1px solid transparent; background: transparent; padding: 9px 15px; border-radius: 4px; color: #6d7664; }
+    button:hover { background: #e9e9dd; }
+    button[aria-pressed="true"] { color: #f5f5e9; background: #465b48; }
+    button:focus-visible, a:focus-visible { outline: 2px solid #8e9e74; outline-offset: 3px; }
+    [hidden] { display: none !important; }
+    .frame { padding: 8px; background: #e4e6da; border: 1px solid #dfe2d5; }
+    .tour-tools { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
+    .tour-tools button { border-color: #dfe2d5; font-size: 12px; }
+    video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #bdc9af; }
+    .map-tools { display: flex; gap: 8px; align-items: center; justify-content: space-between; padding-bottom: 12px; }
+    .map-tools p { margin: 0; font-size: 12px; color: #818974; }
+    .districts { display: flex; gap: 4px; }
+    .districts button { padding: 7px 11px; font-size: 12px; border-color: #dfe2d5; }
+    .map-scroll { overflow-x: auto; overflow-y: hidden; cursor: grab; user-select: none; touch-action: pan-y; background: #c6d4bc; }
+    .map-scroll.dragging { cursor: grabbing; }
+    .map-scroll img { display: block; max-width: none; width: auto; height: min(724px, 68vh); pointer-events: none; }
+    .caption { display: flex; align-items: start; justify-content: space-between; gap: 20px; margin-top: 17px; color: #6d7665; font-size: 13px; line-height: 1.8; }
+    .caption p { margin: 0; }
+    .downloads { display: flex; gap: 16px; flex-shrink: 0; }
+    a { color: #647758; text-underline-offset: 4px; }
+    footer { margin-top: 18px; font-size: 11px; letter-spacing: .08em; color: #969b89; }
+    @media (max-width: 700px) { main { padding: 22px 14px; } header { align-items: start; flex-direction: column; gap: 15px; } h1 { font-size: 26px; } .caption { flex-direction: column; gap: 8px; } .map-tools { align-items: start; flex-direction: column; } .map-scroll img { height: 58vh; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <p class="eyebrow">WINDBELL VALLEY</p>
+        <h1>风铃溪谷</h1>
+        <p class="subtitle">6324 × 724 的手绘村庄 · 山坡住居 / 村中集市 / 河岸水车</p>
+      </div>
+      <nav aria-label="查看方式">
+        <button id="tour-tab" type="button" aria-pressed="true" aria-controls="tour">动画游览</button>
+        <button id="map-tab" type="button" aria-pressed="false" aria-controls="map">大地图</button>
+      </nav>
+    </header>
+    <section id="tour" class="frame" aria-label="村庄动画">
+      <video id="film" src="assets/scene.mp4?v=npc-music-final-20261009-1922" poster="assets/scene-poster.png?v=npc-music-final-20261009-1922" autoplay muted loop playsinline controls preload="metadata"></video>
+      <div class="tour-tools">
+        <div class="districts" aria-label="查看村民动作">
+          <button type="button" data-time="9.5">园丁浇花</button>
+          <button type="button" data-time="18">面包师挥手</button>
+          <button type="button" data-time="38">老人吹笛</button>
+        </div>
+        <button id="music-toggle" type="button" aria-pressed="false">开启音乐</button>
+      </div>
+    </section>
+    <section id="map" hidden aria-label="完整村庄地图">
+      <div class="map-tools">
+        <p>左右拖动，沿着小路看看整个村庄。</p>
+        <div class="districts" aria-label="跳转街区">
+          <button type="button" data-x="0">山坡住居</button>
+          <button type="button" data-x="2076">村中集市</button>
+          <button type="button" data-x="4152">河岸水车</button>
+        </div>
+      </div>
+      <div class="frame">
+        <div id="panorama" class="map-scroll" tabindex="0" aria-label="可横向滚动的地图">
+          <img id="world-image" src="assets/windbell-valley.png?v=npc-music-final-20261009-1922" width="6324" height="724" alt="完整风铃溪谷，含三个街区和村民" draggable="false">
+        </div>
+      </div>
+    </section>
+    <div class="caption">
+      <p id="description">邮差米露和白狐棉尾，沿着春日小路走过整个村庄。<br>村民动作经 RIFE 补帧 · 原创笛子与木吉他三拍小曲 · 点击“开启音乐”收听</p>
+      <div class="downloads">
+        <a href="assets/scene.mp4?v=npc-music-final-20261009-1922" download="风铃溪谷.mp4">保存视频</a>
+        <a href="assets/windbell-valley.png?v=npc-music-final-20261009-1922" download="风铃溪谷.png">保存大地图</a>
+      </div>
+    </div>
+    <footer>米露 · 棉尾 · 园丁琳姨 · 面包师莉娜 · 吹笛老人奥林</footer>
+  </main>
+  <script>
+    const film = document.getElementById('film');
+    const tour = document.getElementById('tour');
+    const map = document.getElementById('map');
+    const tourTab = document.getElementById('tour-tab');
+    const mapTab = document.getElementById('map-tab');
+    const panorama = document.getElementById('panorama');
+    const worldImage = document.getElementById('world-image');
+    const description = document.getElementById('description');
+    const musicToggle = document.getElementById('music-toggle');
+    function updateMusicButton() {
+      const audible = !film.muted && film.volume > 0;
+      musicToggle.setAttribute('aria-pressed', String(audible));
+      musicToggle.textContent = audible ? '关闭音乐' : '开启音乐';
+    }
+    musicToggle.addEventListener('click', () => {
+      film.muted = !film.muted;
+      if (!film.muted && film.volume === 0) film.volume = 0.7;
+      film.play().catch(() => { description.textContent = '点击视频播放按钮，收听春日小路。'; });
+      updateMusicButton();
+    });
+    film.addEventListener('volumechange', updateMusicButton);
+    document.querySelectorAll('[data-time]').forEach(button => {
+      button.addEventListener('click', () => {
+        film.currentTime = Number(button.dataset.time);
+        film.play().catch(() => { description.textContent = '点击视频播放按钮，查看村民动作。'; });
+      });
+    });
+    function showMap(visible) {
+      map.hidden = !visible;
+      tour.hidden = visible;
+      mapTab.setAttribute('aria-pressed', String(visible));
+      tourTab.setAttribute('aria-pressed', String(!visible));
+      if (visible) film.pause();
+      else film.play().catch(() => { description.textContent = '点击视频中的播放按钮，开始 42 秒村庄游览。'; });
+    }
+    mapTab.addEventListener('click', () => showMap(true));
+    tourTab.addEventListener('click', () => showMap(false));
+    document.querySelectorAll('[data-x]').forEach(button => {
+      button.addEventListener('click', () => panorama.scrollTo({
+        left: Number(button.dataset.x) * worldImage.clientWidth / 6324,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+      }));
+    });
+    let drag = null;
+    panorama.addEventListener('pointerdown', event => {
+      if (event.pointerType === 'touch' || event.button !== 0) return;
+      drag = { x: event.clientX, left: panorama.scrollLeft };
+      panorama.setPointerCapture(event.pointerId);
+      panorama.classList.add('dragging');
+    });
+    panorama.addEventListener('pointermove', event => {
+      if (drag) panorama.scrollLeft = drag.left + drag.x - event.clientX;
+    });
+    const stopDrag = () => { drag = null; panorama.classList.remove('dragging'); };
+    panorama.addEventListener('pointerup', stopDrag);
+    panorama.addEventListener('pointercancel', stopDrag);
+    panorama.addEventListener('wheel', event => {
+      if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+        event.preventDefault();
+        panorama.scrollLeft += event.deltaY;
+      }
+    }, { passive: false });
+    film.addEventListener('error', () => { description.textContent = '视频未能加载，可点击“保存视频”直接打开文件。'; });
+  </script>
+</body>
+</html>
