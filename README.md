@@ -10,10 +10,15 @@
 - 原创 72 BPM 三拍背景曲，笛子、木吉他、轻弦乐等声部；音乐已合并在视频中。
 - 默认静音播放，点击“开启音乐”收听。
 
+## 制作提示词
+
+[PROMPT.md](PROMPT.md) 包含可直接复制的总提示词、实际制作过程、后续修正，以及地图、人物和 NPC 动作的原始生成提示词。
+
 ## 文件
 
 ```text
 index.html                 页面、样式和交互
+PROMPT.md                  制作流程与可复用提示词
 assets/scene.mp4            带背景音乐的游览视频
 assets/scene-poster.png     视频封面
 assets/windbell-valley.png  完整地图
