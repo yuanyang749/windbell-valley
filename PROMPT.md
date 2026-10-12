@@ -68,6 +68,10 @@ NPC 的定位锚点固定在鞋底，水流和音符的边界不能改变人物�
 目标成品约 42 秒，1280 × 720，30 fps。
 
 【环境动态】
+集市的三角旗只动旗面、喷泉只动水流和盆内波纹、大树枝梢与叶簇随风摆动。
+保持旗绳、喷泉石质结构、树干和粗枝固定，少量落叶缓慢旋转飘落。
+部分房屋烟囱增加淡淡炊烟，烟雾从准确的烟囱口起始，缓缓向上卷曲消散。
+前景花簇加入少量蝴蝶和蜜蜂，真实扇翅、悬停与小范围飞行，避免遮住主角。
 在原背景中选取晾衣绳、柳树垂枝与溪流水面区域，生成固定镜头的约 4 秒动作循环。
 衣服上端保持挂在绳上、下摆随风轻摆；柳树主干保持稳定，只让外围枝梢轻摆；
 溪流波纹与反光沿河道流动，桥、河岸、石头与草丛保持静止。
@@ -263,4 +267,63 @@ Bring the willow tree in this painted scene to life with a CLEARLY VISIBLE gentl
 
 ```text
 Animate ONLY the CREEK WATER SURFACE underneath and downstream of the stone bridge in this exact painted scene. Completely locked camera and unchanged composition, scale, lighting and colors. The bridge, river banks, rocks, reeds, grass, buildings, water wheel, fences and tree trunk remain perfectly still and retain their exact positions and shapes. Create gentle continuous downstream flow toward the foreground and slightly toward screen left: small painted ripples and warm pale-blue/cream reflections glide along the water surface and curl around the fixed stones. Keep the waterline fixed and the flow shallow, natural and quiet. Preserve the watercolor/gouache texture; no photorealistic or glossy CGI water. No rising water, flooding, moving rocks, changing banks, exaggerated waves, splashes over the shore, mist or new objects. Produce a smoothly cyclic four-second reflection pattern, returning to the supplied final still without a visible pause or snap. Keep all water inside the existing creek. No camera pan, zoom, parallax, exposure flicker, new people, animals, text or particles. The clip is an environmental water plate for masked compositing onto the original map.
+```
+
+## 七、旗帜、喷泉、大树与生活气息（2026-10-12）
+
+按照截图定位集市旗绳、喷泉和大树，新增以下效果，并保留前一版衣服、柳枝、溪流、人物与音乐。
+
+1. 三角旗首段将旗尖翻到绳上方，重新生成并采用保持旗面下垂、仅轻柔横摆的第二段。三角旗、喷泉与大树枝梢分别从原地图裁图，用 Grok 订阅生成固定镜头、首尾约束的 4 秒片段。以局部遮罩保护旗绳、喷泉石柱、树干、粗枝和建筑。
+2. 使用内置 imagegen 生成透明的蝶蜂组合、轻烟与一片黄绿色叶子。蝶蜂和炊烟再通过 Grok 订阅生成动作，sprite-gen 抠像与循环处理。炊烟初次抠像出现紫边，改用引擎的 full spill 与 palette 去污染处理，拒绝初次结果。
+3. 五段新视频循环都是 96 个源帧、4 秒；RIFE 输出 192 帧、48 fps。旗帜、喷泉、大树、炊烟各保留 96 个中间帧；蝶蜂保留 90 个，6 个补帧提案被引擎质量保护拒绝。
+4. 三片小落叶复用同一张生成的透明叶片，以确定性曲线路径、旋转和渐隐直接采样到 48 fps。这里没有用 RIFE，也没有重新绘制地图。
+5. 炊烟叠在三个准确的烟囱口，使用错开的循环相位与轻透明度。三组蝶蜂分布在不同街区的前景花簇，每组两只蝴蝶、一只蜜蜂，随前景使用同样的视差。
+6. 新增网页时间跳转按钮：旗帜与喷泉、大树与落叶、炊烟与花间飞舞。成品仍为 42 秒、1280 × 720、30 fps，沿用原配乐；可拖动的大地图仍为静态。
+
+### 三角旗动作提示词
+
+```text
+Animate the SAME hanging triangular pennant flags on this curved rope with a VERY SOFT sideways breeze. At EVERY moment each triangle must remain HANGING DOWN BELOW its own section of rope. Its top edge stays attached in its original place; its lower point stays below the rope and gently shifts sideways only THREE to FIVE original-image pixels. Small relaxed fabric rippling and tiny bends, slightly staggered between flags. NEVER lift a flag above the line, never invert a triangle upward, never flip over, never stretch or change its size. This is a calm sunny day. Keep exactly the original flag colors and triangles. The rope, roof, foliage, fountain, lamp and entire background stay perfectly stationary. One smooth small-amplitude four-second cycle returning to the provided closing frame. Locked camera, unchanged framing, perspective, watercolor/gouache style, exposure and colors. No wind gusts, violent flapping, camera movement, new objects, people or particles.
+```
+
+### 喷泉动作提示词
+
+```text
+Animate the flowing water of this EXACT little painted village fountain. The stone finial, tiers, central pillar, circular basin and every piece of architecture remain completely rigid at their existing pixel positions. Thin graceful pale blue and creamy-white water jets continuously arc from the upper bowl down into the lower basin. Small droplets travel DOWN along the existing streams; delicate ripples shimmer INSIDE the basin and small modest splashes stay within its rim. Clearly readable continuous flowing water with a quiet summer mood, not a frozen water still. Retain exactly the current water levels and stream positions, hand-painted watercolor/gouache style and stable colors. Camera entirely locked, no pan or zoom, no scenery movement or focus breathing. Four-second cyclic water pattern returning smoothly to the pinned final frame. No moving stones, new jets, flooding, mist, bubbles covering the scene, text or people.
+```
+
+### 大树枝梢动作提示词
+
+```text
+Animate the leafy crown and slender flexible branch tips of this exact grand village tree in a gentle summer breeze. The clusters of green and yellow-green leaves sway softly back and forth with a clearly readable 5 to 9 original-pixel movement. Flexible small outer twigs bend naturally; individual leaves flutter on them with slightly staggered timing. The main trunk, big woody structural branches and ALL buildings, flags, fountain, bench, stone walls and surroundings stay perfectly fixed. Preserve the original tree silhouette, leaf colors, dappled watercolor/gouache brushwork, sunlight and contrast. Complete a graceful four-second wind cycle and end exactly on the attached still. Camera absolutely locked, no zoom, no parallax or whole-image drift. Do not add flying leaves in this plate: a few detached falling leaves will be composited separately. No changing tree species, missing branches, new foliage, animals, birds, text, storm or particles.
+```
+
+### 炊烟动作提示词
+
+```text
+Animate this SAME thin delicate hand-painted cooking-smoke plume. A continuous stream of very light cream-white translucent smoke emerges from the EXACT fixed tiny lower tip, rises slowly, curls gently to the right, and gradually dissolves near the top. Soft wisps roll through the shape, replenishing from below; clearly visible gentle upward flow rather than a rigid image sliding or pulsing. Preserve its slender scale, light airy watercolor brushwork and subtle soft edges. No black smoke, flames, explosion or broad cloud. The base stays fixed at the same pixel and no smoke crosses frame borders. Camera completely locked. Four-second continuous cycle returning smoothly to the supplied last frame; no snap or sudden opacity change. Entire empty background stays perfectly flat pure magenta #FF00FF, no gradient. No chimney, house, scenery, floor, shadow, text or new objects.
+```
+
+### 蝶蜂飞舞动作提示词
+
+```text
+Animate the SAME two little painted butterflies and SAME honeybee from this image. Exactly three insects, retaining their colors, original sizes, wing patterns and loose grouping. The cream and blue butterflies continuously open and close their wings naturally while drifting slowly along two small curved hovering paths with different phases. The bee quickly flutters its tiny wings and makes a small gentle figure-eight patrol. Keep each insect moving within its own broad empty patch, without colliding, changing species, disappearing or multiplying. Small local travel, less than 25 pixels at the reference image scale, above garden flowers that will be supplied later. Smooth real wing articulation, not rigid whole-picture bobbing. Preserve the delicate watercolor/gouache style. Camera locked, four-second cyclic flight returning smoothly to the supplied closing image. ALL empty space stays perfectly flat solid pure magenta #FF00FF. No shadows, floor, flowers, grass, trails, particles, labels, extra insects or new objects.
+```
+
+### 蝶蜂初始素材提示词（内置 imagegen）
+
+```text
+Use case: stylized-concept. Asset type: one reusable ambient garden insect overlay for a hand-painted 2D village animation. Create exactly TWO small original butterflies and ONE small honeybee flying in a loose horizontal grouping, with ample genuine transparent empty space between them and on every outer edge. Upper-left a pale cream butterfly with soft ochre edging and thin brown body, lower-right a muted sky-blue butterfly, near middle-right a little honey-yellow bee with tiny dark brown stripes and pale translucent wings. Their wings are visible in a mid-flutter pose; friendly natural insects, no faces. Match warm gouache and watercolor cel-animation backgrounds, delicate painted shapes, subtle natural shading and thin brown lines. Entire insects visible and each takes only about 12 percent of the full image width; leave plenty of empty flight room around the group. Horizontal composition approximately 2:1. Genuine transparent background, no flowers, branches, grass, scenery, ground, cast shadows, typography, grid, panels, labels, photorealism or 3D. The three insects together form a single ambient effect that will be animated over foreground flowers.
+```
+
+### 炊烟初始素材提示词（内置 imagegen）
+
+```text
+Use case: stylized-concept. Asset type: one isolated reusable chimney-smoke plume for a warm hand-painted village game. A single narrow, delicate cream-white and very pale cool gray plume of cooking smoke rises gracefully from a tiny point near the lower center, curls gently toward upper right, and thins into soft wispy strands. Painterly gouache/watercolor animation style with delicate translucent feathered edges and calm flowing contours. One connected elegant wispy plume, light airy domestic cooking smoke, not a broad cloud or steam explosion. Entire plume inside the image with generous genuine transparent margin on every side; plume occupies about 45 percent of width and 70 percent of height in a portrait composition. Smoke only. Genuine transparent background, NO chimney, house, fire, soot, black smoke, scene, ground, shadow, text, checkerboard or grid. Subtle modest smoke intended to be scaled down over distant rooftops.
+```
+
+### 落叶初始素材提示词（内置 imagegen）
+
+```text
+Use case: stylized-concept. Asset type: one tiny falling-leaf sprite for a hand-painted summer village tree. Paint a SINGLE fresh yellow-green small lobed plane-tree leaf, slightly angled, with a tiny warm brown stem and simple delicate veins, matching soft gouache and watercolor cel-animation background art. Natural clean readable silhouette, subtle warm sunlight and muted sage shadows, no photorealism. Entire leaf centered, occupying about half of the square image with generous transparent margin. Genuine transparent background, leaf only, no tree, branch, ground, other leaves, shadows, text, grid or 3D. This one leaf will be scaled very small and rotated along a gentle falling path.
 ```
