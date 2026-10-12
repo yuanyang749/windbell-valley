@@ -25,7 +25,7 @@
     video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #bdc9af; }
     .map-tools { display: flex; gap: 8px; align-items: center; justify-content: space-between; padding-bottom: 12px; }
     .map-tools p { margin: 0; font-size: 12px; color: #818974; }
-    .districts { display: flex; gap: 4px; }
+    .districts { display: flex; gap: 4px; flex-wrap: wrap; }
     .districts button { padding: 7px 11px; font-size: 12px; border-color: #dfe2d5; }
     .map-scroll { overflow-x: auto; overflow-y: hidden; cursor: grab; user-select: none; touch-action: pan-y; background: #c6d4bc; }
     .map-scroll.dragging { cursor: grabbing; }
@@ -52,12 +52,14 @@
       </nav>
     </header>
     <section id="tour" class="frame" aria-label="村庄动画">
-      <video id="film" src="assets/scene.mp4?v=npc-music-final-20261009-1922" poster="assets/scene-poster.png?v=npc-music-final-20261009-1922" autoplay muted loop playsinline controls preload="metadata"></video>
+      <video id="film" src="assets/scene.mp4?v=environment-20261012" poster="assets/scene-poster.png?v=environment-20261012" autoplay muted loop playsinline controls preload="metadata"></video>
       <div class="tour-tools">
-        <div class="districts" aria-label="查看村民动作">
+        <div class="districts" aria-label="查看动作与环境">
           <button type="button" data-time="9.5">园丁浇花</button>
           <button type="button" data-time="18">面包师挥手</button>
           <button type="button" data-time="38">老人吹笛</button>
+          <button type="button" data-time="6.5">晾衣微风</button>
+          <button type="button" data-time="37.5">柳枝与溪流</button>
         </div>
         <button id="music-toggle" type="button" aria-pressed="false">开启音乐</button>
       </div>
@@ -73,15 +75,15 @@
       </div>
       <div class="frame">
         <div id="panorama" class="map-scroll" tabindex="0" aria-label="可横向滚动的地图">
-          <img id="world-image" src="assets/windbell-valley.png?v=npc-music-final-20261009-1922" width="6324" height="724" alt="完整风铃溪谷，含三个街区和村民" draggable="false">
+          <img id="world-image" src="assets/windbell-valley.png?v=environment-20261012" width="6324" height="724" alt="完整风铃溪谷，含三个街区和村民" draggable="false">
         </div>
       </div>
     </section>
     <div class="caption">
-      <p id="description">邮差米露和白狐棉尾，沿着春日小路走过整个村庄。<br>村民动作经 RIFE 补帧 · 原创笛子与木吉他三拍小曲 · 点击“开启音乐”收听</p>
+      <p id="description">邮差米露和白狐棉尾，沿着春日小路走过整个村庄。<br>晾衣随风轻摆 · 柳枝摇曳 · 溪流波光 · 原创笛子与木吉他配乐</p>
       <div class="downloads">
-        <a href="assets/scene.mp4?v=npc-music-final-20261009-1922" download="风铃溪谷.mp4">保存视频</a>
-        <a href="assets/windbell-valley.png?v=npc-music-final-20261009-1922" download="风铃溪谷.png">保存大地图</a>
+        <a href="assets/scene.mp4?v=environment-20261012" download="风铃溪谷.mp4">保存视频</a>
+        <a href="assets/windbell-valley.png?v=environment-20261012" download="风铃溪谷.png">保存大地图</a>
       </div>
     </div>
     <footer>米露 · 棉尾 · 园丁琳姨 · 面包师莉娜 · 吹笛老人奥林</footer>

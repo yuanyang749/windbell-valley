@@ -67,6 +67,14 @@ NPC 的定位锚点固定在鞋底，水流和音符的边界不能改变人物�
 各 NPC 循环独立播放；完整视频形成一次从山坡到河岸的游览。
 目标成品约 42 秒，1280 × 720，30 fps。
 
+【环境动态】
+在原背景中选取晾衣绳、柳树垂枝与溪流水面区域，生成固定镜头的约 4 秒动作循环。
+衣服上端保持挂在绳上、下摆随风轻摆；柳树主干保持稳定，只让外围枝梢轻摆；
+溪流波纹与反光沿河道流动，桥、河岸、石头与草丛保持静止。
+使用原画裁剪作为首尾帧，动画局部经过固定遮罩合回原图，并做边缘过渡和色调检查。
+沿用 sprite-gen 循环检查与本地 RIFE 补帧，保护遮罩外原像素，检查循环衔接。
+这次只让视频中的环境动起来，可拖动的大地图仍是静态图片。
+
 【背景音乐】
 创作一首原创、轻柔、温暖的三拍小曲，约 72 BPM。
 以笛子旋律和尼龙弦木吉他分解和弦为主，加入轻弦乐、少量钟琴和低音。
@@ -224,3 +232,35 @@ Animate the SAME elderly flute player from this image, preserving his exact silv
 内置图像生成 → Grok 订阅动作视频 → sprite-gen 抠像与循环 → 本地 RIFE 补帧 → 场景合成 → 本地原创配乐 → FFmpeg 音视频合成 → 静态网页 → GitHub 公开仓库与 GitHub Pages。
 
 复现时按自己的生成结果检查几何位置、动作周期、插帧质量和网页播放。
+
+## 六、环境动态更新（2026-10-12）
+
+后续加入了晾衣微风、柳树垂枝与溪流反光三个局部循环，沿用原地图、人物和音乐。
+
+1. 从原地图裁出三个区域，使用 Grok 订阅 `grok-imagine-video-1.5` 生成 4 秒、720p 的固定镜头视频，并用同一张裁剪图约束首尾。
+2. 晾衣与溪流使用首段生成；柳枝首段变化偏轻，补生成了一段更清楚的轻风摆动后采用。
+3. 用 FFmpeg 解码不透明场景视频并恢复原裁剪分辨率。以局部遮罩保留衣服、水面和枝梢区域，遮罩外直接使用原图；河水遮罩避开岸边与石头，树干与桥保持原像素。
+4. 循环取样调用 sprite-gen 的 `pinned_cycle`，保留 96 个原始帧、4 秒周期。场景区域没有洋红底，因此没有使用人物的 chroma 抠像路线。
+5. 调用既有 RIFE v4.6 重采样与质量保护，每个环境循环输出 192 帧、48 fps，周期仍为 4 秒。三个循环各实际保留 96 个 RIFE 中间帧。
+6. 为不透明场景视频手工编写了局部遮罩与色调匹配，再接入 sprite-gen 场景渲染。检查确认遮罩外像素与原图逐帧完全一致。
+7. 完整游览仍为 42 秒、1280 × 720、30 fps，保留原背景音乐；网页加入“晾衣微风”和“柳枝与溪流”时间跳转按钮。
+
+### 环境视频原始提示词
+
+#### 晾衣微风
+
+```text
+Animate this exact painted village crop with a gentle summer breeze. The camera is completely locked: preserve all pixel positions, framing, perspective, house, roof, fence posts, clothesline, flowers and foliage. Only the THREE main cloth pieces on the clothesline move: the blue-and-white checked cloth on the left, the large white sheet in the middle, and the cream cloth on the right. Their upper edges stay firmly attached to the same line and pegs. Their lower halves softly billow and flutter sideways a small distance, each with a slightly different phase, while retaining exactly the same fabric colors and pattern. A relaxed light breeze, not a storm: about a few source-image pixels of displacement at the hem, with graceful soft folds. Complete one smooth four-second wind cycle and return precisely to the supplied closing image. Keep the little blue towels and the surroundings still. Preserve the original delicate hand-painted watercolor/cel background style, sharpness, lighting and color. No camera motion, zoom, parallax, focus breathing, color shifts, changing architecture, new clothes, flying objects, people, animals, text or particles. This is an environmental animation plate for compositing into the original map.
+```
+
+#### 柳枝微风（采用的第二段）
+
+```text
+Bring the willow tree in this painted scene to life with a CLEARLY VISIBLE gentle breeze. The long hanging leafy twig sprays on BOTH outer sides and at the bottom of the crown swing slowly sideways, bend softly, and flutter throughout the shot. Their tips move about eight to twelve pixels at the original reference scale, then return. The leaves remain attached to their own twigs. This must show real flowing movement of the hanging branches, not just a still image or falling particles. The breeze builds gradually, the flexible twigs lean one way then gently settle back, completing one continuous four-second cycle that closes on the attached final image. The trunk and strong structural branches stay rooted and steady. Locked camera. Keep the original hand-painted watercolor/gouache style and the recognizable shapes of the tree, the mill and the village. Keep lighting and colors stable. No new objects, flying leaves, birds, particles, camera motion or zoom. Only wind-driven leafy twig motion.
+```
+
+#### 溪流水面
+
+```text
+Animate ONLY the CREEK WATER SURFACE underneath and downstream of the stone bridge in this exact painted scene. Completely locked camera and unchanged composition, scale, lighting and colors. The bridge, river banks, rocks, reeds, grass, buildings, water wheel, fences and tree trunk remain perfectly still and retain their exact positions and shapes. Create gentle continuous downstream flow toward the foreground and slightly toward screen left: small painted ripples and warm pale-blue/cream reflections glide along the water surface and curl around the fixed stones. Keep the waterline fixed and the flow shallow, natural and quiet. Preserve the watercolor/gouache texture; no photorealistic or glossy CGI water. No rising water, flooding, moving rocks, changing banks, exaggerated waves, splashes over the shore, mist or new objects. Produce a smoothly cyclic four-second reflection pattern, returning to the supplied final still without a visible pause or snap. Keep all water inside the existing creek. No camera pan, zoom, parallax, exposure flicker, new people, animals, text or particles. The clip is an environmental water plate for masked compositing onto the original map.
+```
