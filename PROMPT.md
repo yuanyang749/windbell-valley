@@ -68,6 +68,8 @@ NPC 的定位锚点固定在鞋底，水流和音符的边界不能改变人物�
 目标成品约 42 秒，1280 × 720，30 fps。
 
 【环境动态】
+水车外缘的水帘沿叶片持续下落，底部有细小水花、波纹和流向溪流的细水。
+水车木质结构、石墙和岸边保持固定，以局部水流遮罩合成，使用本地 RIFE 补帧。
 集市的三角旗只动旗面、喷泉只动水流和盆内波纹、大树枝梢与叶簇随风摆动。
 保持旗绳、喷泉石质结构、树干和粗枝固定，少量落叶缓慢旋转飘落。
 部分房屋烟囱增加淡淡炊烟，烟雾从准确的烟囱口起始，缓缓向上卷曲消散。
@@ -326,4 +328,14 @@ Use case: stylized-concept. Asset type: one isolated reusable chimney-smoke plum
 
 ```text
 Use case: stylized-concept. Asset type: one tiny falling-leaf sprite for a hand-painted summer village tree. Paint a SINGLE fresh yellow-green small lobed plane-tree leaf, slightly angled, with a tiny warm brown stem and simple delicate veins, matching soft gouache and watercolor cel-animation background art. Natural clean readable silhouette, subtle warm sunlight and muted sage shadows, no photorealism. Entire leaf centered, occupying about half of the square image with generous transparent margin. Genuine transparent background, leaf only, no tree, branch, ground, other leaves, shadows, text, grid or 3D. This one leaf will be scaled very small and rotated along a gentle falling path.
+```
+
+## 八、水车流水（2026-10-12）
+
+从原图裁出水车与底部小水道，以 Grok 订阅生成 4 秒固定镜头的水流片段。木质水车与石墙固定，薄水帘沿原轮缘和叶片落下，底部有小水花，再流入溪流。以固定局部遮罩保持水流以外的原像素，sprite-gen 取首尾约束循环并使用本地 RIFE v4.6 补帧。实测循环为 96 个原始帧，补帧后 192 帧、48 fps、4 秒，保留 96 个 RIFE 中间帧；遮罩外像素与原图一致。沿用 42 秒游览、既有动画和配乐，网页新增“水车流水”按钮。
+
+### 实际水流视频提示词
+
+```text
+Animate ONLY the cascading water on this exact painted village waterwheel. A thin, continuous pale-blue and cream-white stream pours from the existing top inlet onto the outer rim, flows DOWN over the existing wooden paddles on the RIGHT side, and falls naturally into the small pool below. Visible moving highlights, slender ribbons and a few tiny droplets travel downward along the existing curved water path. At the foot, add delicate small splashes within the existing pool; the small lower cascade continues into the creek with modest ripples. Preserve the original watercourse, water levels and shorelines. The wooden wheel, spokes, hub, paddles, stone walls, roof, greenery, flowers and bridge must all remain rigidly fixed in their exact pixel positions and keep their original shapes. This plate animates the WATER only. Quiet gentle domestic mill flow, not a flood or a foaming torrent. Keep the original warm hand-painted gouache/watercolor texture, stable sunlight, colors, contrast and framing. Camera completely locked, no zoom, pan, whole-image motion, new objects, mist, text or people. Produce a continuous four-second water-flow cycle closing smoothly on the attached last frame, with no freeze or snap. Small readable changes in the moving water rather than changing the stone or wood.
 ```
