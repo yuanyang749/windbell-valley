@@ -69,7 +69,8 @@ NPC 的定位锚点固定在鞋底，水流和音符的边界不能改变人物�
 
 【环境动态】
 水车外缘的水帘沿叶片持续下落，底部有细小水花、波纹和流向溪流的细水。
-水车木质结构、石墙和岸边保持固定，以局部水流遮罩合成，使用本地 RIFE 补帧。
+水车轮轴、石墙和岸边保持固定，轮辐和叶片刚性、持续慢转，保持原斜视透视。
+水车转动与水流用约 8 秒循环、局部遮罩合成，使用本地 RIFE 补帧。
 集市的三角旗只动旗面、喷泉只动水流和盆内波纹、大树枝梢与叶簇随风摆动。
 保持旗绳、喷泉石质结构、树干和粗枝固定，少量落叶缓慢旋转飘落。
 部分房屋烟囱增加淡淡炊烟，烟雾从准确的烟囱口起始，缓缓向上卷曲消散。
@@ -86,7 +87,10 @@ NPC 的定位锚点固定在鞋底，水流和音符的边界不能改变人物�
 以笛子旋律和尼龙弦木吉他分解和弦为主，加入轻弦乐、少量钟琴和低音。
 旋律与和声适合春日乡间漫步。使用可用的本地乐器声库渲染，保留乐谱数据与 MIDI。
 让音乐与完整视频一样长，开头和结尾自然淡入淡出，控制音量并避免削波。
-将音乐合并进最终视频，浏览器点击“开启音乐”即可听到。
+加入随经过位置变化的环境声：房屋附近的微风，大树的叶声，喷泉细水，水车与溪流的流水和轻微木轮声，少量风铃。
+环境声按主角与声源距离平滑渐入渐出，并按镜头位置做轻微左右声场变化。
+使用不含音乐和人声的独立环境音素材，短素材用交叉淡化循环，轻柔混在原曲下方。
+将配乐与环境声合并进最终视频，浏览器点击“开启声音”即可听到。
 
 【网页与发布】
 使用简单的静态 HTML、CSS 和 JavaScript 展示成品，风格与手绘村庄一致。
@@ -338,4 +342,41 @@ Use case: stylized-concept. Asset type: one tiny falling-leaf sprite for a hand-
 
 ```text
 Animate ONLY the cascading water on this exact painted village waterwheel. A thin, continuous pale-blue and cream-white stream pours from the existing top inlet onto the outer rim, flows DOWN over the existing wooden paddles on the RIGHT side, and falls naturally into the small pool below. Visible moving highlights, slender ribbons and a few tiny droplets travel downward along the existing curved water path. At the foot, add delicate small splashes within the existing pool; the small lower cascade continues into the creek with modest ripples. Preserve the original watercourse, water levels and shorelines. The wooden wheel, spokes, hub, paddles, stone walls, roof, greenery, flowers and bridge must all remain rigidly fixed in their exact pixel positions and keep their original shapes. This plate animates the WATER only. Quiet gentle domestic mill flow, not a flood or a foaming torrent. Keep the original warm hand-painted gouache/watercolor texture, stable sunlight, colors, contrast and framing. Camera completely locked, no zoom, pan, whole-image motion, new objects, mist, text or people. Produce a continuous four-second water-flow cycle closing smoothly on the attached last frame, with no freeze or snap. Small readable changes in the moving water rather than changing the stone or wood.
+```
+
+## 九、水车转动与分区环境音（2026-10-12）
+
+前一节是仅流水版本。本次制作刚性水车缓慢转动与持续水帘的 8 秒循环，固定镜头和首尾约束。初次提交网络超时后，手动重新提交一次并采用结果。局部遮罩保留石墙、屋顶、岸边和前方轴心支撑的原像素；检查八个源相位与循环衔接。192 个原始帧经过 sprite-gen RIFE v4.6 输出 384 帧、48 fps，周期仍为 8 秒，保留 192 个 RIFE 中间帧。轴心区域逐帧与原图一致。这是经过检查的生成动画，不作绝对完美或每个木纹都精确不变的保证。
+
+环境声使用同一 Grok 订阅单独生成：树叶微风、喷泉细水、水车与溪流，每段约 6 秒，不要求音乐和人声。风声首次提交遇到并发限流，分开重试后成功。提取为 48 kHz 立体声音频，用 FFmpeg 高低通轻滤波；短素材以 0.35 秒等功率交叉淡化循环，再根据主角与固定声源的距离渐入渐出。左右声场随镜头移动，三个风铃轻响由本地合成。原配乐在树旁和河岸最多轻降约 0.92 dB，音效混在下方。视频仍为 42 秒，音轨是配乐与环境声的最终混音。网页按钮更新为“水车转动与流水”和“开启声音”。
+
+| 环境声 | 主要可听区间 | 最接近声源 |
+|---|---|---|
+| 山坡微风 | 0.2–10.4 秒 | 4.6 秒 |
+| 大树叶声 | 16.3–29.2 秒 | 22.7 秒 |
+| 喷泉细水 | 16.9–25.1 秒 | 21.0 秒 |
+| 水车与溪流 | 31.4–41.7 秒 | 37.7 秒 |
+
+### 水车转动原始提示词
+
+```text
+Animate this EXACT wooden village waterwheel as a solid rigid mechanical wheel, viewed at the same oblique perspective. The wheel turns smoothly and continuously CLOCKWISE in the visible image: the wooden paddles on the RIGHT descend with the falling water. Its center axle stays fixed at EXACTLY the same pixel. One complete 360-degree revolution over EIGHT seconds at uniform modest speed, returning exactly to the supplied closing image, with no reversal, slowing, accelerating, pause or rebound. Keep the same number of wooden spokes and evenly spaced paddles. The spokes, circular wooden rims, paddle boards and hub stay attached, mechanically rigid, consistent in thickness, depth and material, and travel together through the same fixed elliptical perspective. NO bending, melting, morphing, changing spoke count, wobbling, moving hub, size breathing or geometry changes. The light wooden axle support and nearby stone masonry stay fixed. The narrow pale-blue water sheet keeps cascading DOWN over the right-hand paddles throughout, with delicate small splashes in the existing lower pool and lower outflow. Stone walls, timber roof, building, plants, flowers, ground and ALL scenery stay perfectly still. Preserve the original warm watercolor/gouache painted style, wood tones, shadows, illumination, colors and framing. Locked camera, no pan, zoom, new objects, people, mist, storm or text. This is a precise mechanical animation plate: true rotation of stable boards around a fixed axle, not sliding spokes, an oscillation or a deforming wheel.
+```
+
+### 树叶微风环境音生成提示词
+
+```text
+Locked camera, preserve this warm painted tree scene. The tree leaves and tiny twigs stir gently in a mild summer breeze. AUDIO IS THE MAIN DELIVERABLE: a clean natural close field-recording style layer of very soft breeze through broad leaves, delicate irregular leaf rustles, a quiet peaceful village afternoon. No storm, no strong whistling wind, no crowd, no voices, no speech, no music, no melody or percussion. No microphone hiss, clipping or electronic hum. Smooth continuous environmental ambience throughout six seconds, gentle even level with no intro or ending jingle.
+```
+
+### 喷泉细水环境音生成提示词
+
+```text
+Locked camera and fixed stone fountain. Thin water jets fall into the shallow basin with modest ripples. AUDIO IS THE MAIN DELIVERABLE: clean natural field-recording style of a quiet little courtyard fountain, fine trickling water, light splashing droplets into a small stone basin, very calm and delicate. No roaring waterfall, wind, voices, birds, footsteps, music, speech, melody or percussion. No electronic hum, clipping or artificial transition sounds. Continuous soft water sound throughout six seconds with no musical intro or ending.
+```
+
+### 水车与溪流环境音生成提示词
+
+```text
+Locked camera, a calm painted village mill with water running over its wooden wheel into a shallow stream. AUDIO IS THE MAIN DELIVERABLE: clean natural field-recording style of gentle close flowing stream water, small rippling splashes and trickling over a low rocky drop, with very faint occasional wooden wheel creaks underneath. Quiet peaceful rural afternoon, softly detailed water, no roaring rapids or storm. No music, melody, percussion, speech, voices, birds, electronic hum, clipping, intro or ending. Continuous natural water ambience throughout six seconds.
 ```

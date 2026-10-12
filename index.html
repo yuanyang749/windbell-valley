@@ -52,7 +52,7 @@
       </nav>
     </header>
     <section id="tour" class="frame" aria-label="村庄动画">
-      <video id="film" src="assets/scene.mp4?v=waterwheel-20261012" poster="assets/scene-poster.png?v=waterwheel-20261012" autoplay muted loop playsinline controls preload="metadata"></video>
+      <video id="film" src="assets/scene.mp4?v=wheel-sound-20261012" poster="assets/scene-poster.png?v=wheel-sound-20261012" autoplay muted loop playsinline controls preload="metadata"></video>
       <div class="tour-tools">
         <div class="districts" aria-label="查看动作与环境">
           <button type="button" data-time="9.5">园丁浇花</button>
@@ -60,12 +60,12 @@
           <button type="button" data-time="38">老人吹笛</button>
           <button type="button" data-time="6.5">晾衣微风</button>
           <button type="button" data-time="37.5">柳枝与溪流</button>
-          <button type="button" data-time="37.8">水车流水</button>
+          <button type="button" data-time="37.8">水车转动与流水</button>
           <button type="button" data-time="21.5">旗帜与喷泉</button>
           <button type="button" data-time="22.3">大树与落叶</button>
           <button type="button" data-time="1.5">炊烟与花间飞舞</button>
         </div>
-        <button id="music-toggle" type="button" aria-pressed="false">开启音乐</button>
+        <button id="music-toggle" type="button" aria-pressed="false">开启声音</button>
       </div>
     </section>
     <section id="map" hidden aria-label="完整村庄地图">
@@ -79,15 +79,15 @@
       </div>
       <div class="frame">
         <div id="panorama" class="map-scroll" tabindex="0" aria-label="可横向滚动的地图">
-          <img id="world-image" src="assets/windbell-valley.png?v=waterwheel-20261012" width="6324" height="724" alt="完整风铃溪谷，含三个街区和村民" draggable="false">
+          <img id="world-image" src="assets/windbell-valley.png?v=wheel-sound-20261012" width="6324" height="724" alt="完整风铃溪谷，含三个街区和村民" draggable="false">
         </div>
       </div>
     </section>
     <div class="caption">
-      <p id="description">邮差米露和白狐棉尾，沿着春日小路走过整个村庄。<br>旗帜轻摆 · 喷泉流动 · 树风落叶 · 炊烟袅袅 · 花间蝶蜂 · 原创笛子与木吉他配乐</p>
+      <p id="description">邮差米露和白狐棉尾，沿着春日小路走过整个村庄。<br>水车慢转 · 风声叶响 · 喷泉与溪流 · 轻柔风铃 · 原创笛子与木吉他配乐</p>
       <div class="downloads">
-        <a href="assets/scene.mp4?v=waterwheel-20261012" download="风铃溪谷.mp4">保存视频</a>
-        <a href="assets/windbell-valley.png?v=waterwheel-20261012" download="风铃溪谷.png">保存大地图</a>
+        <a href="assets/scene.mp4?v=wheel-sound-20261012" download="风铃溪谷.mp4">保存视频</a>
+        <a href="assets/windbell-valley.png?v=wheel-sound-20261012" download="风铃溪谷.png">保存大地图</a>
       </div>
     </div>
     <footer>米露 · 棉尾 · 园丁琳姨 · 面包师莉娜 · 吹笛老人奥林</footer>
@@ -105,12 +105,12 @@
     function updateMusicButton() {
       const audible = !film.muted && film.volume > 0;
       musicToggle.setAttribute('aria-pressed', String(audible));
-      musicToggle.textContent = audible ? '关闭音乐' : '开启音乐';
+      musicToggle.textContent = audible ? '关闭声音' : '开启声音';
     }
     musicToggle.addEventListener('click', () => {
       film.muted = !film.muted;
       if (!film.muted && film.volume === 0) film.volume = 0.7;
-      film.play().catch(() => { description.textContent = '点击视频播放按钮，收听春日小路。'; });
+      film.play().catch(() => { description.textContent = '点击视频播放按钮，收听配乐与环境声。'; });
       updateMusicButton();
     });
     film.addEventListener('volumechange', updateMusicButton);
