@@ -18,11 +18,23 @@
 
 [PROMPT.md](PROMPT.md) 包含可直接复制的总提示词、实际制作过程、后续修正，以及地图、人物和 NPC 动作的原始生成提示词。
 
+## 可复用制作手册与 Skill
+
+[animated-2d-scene-skill](animated-2d-scene-skill/README.md) 将本项目经验整理为可独立阅读的制作手册和 Codex 技能包：
+
+- [制作手册](animated-2d-scene-skill/references/handbook.md)：参考图动画、抠像、遮罩、循环、RIFE、声音及交付。
+- [坑点记录](animated-2d-scene-skill/references/pitfalls.md)：真实错误、修正与验证方法。
+- [提示词模板](animated-2d-scene-skill/references/prompts.md)：适用于新地图、角色和环境动作。
+- [技能入口与安装](animated-2d-scene-skill/README.md)：在新项目中使用，附保持时长和锚点的 RIFE 辅助脚本。
+
+技能包与手册采用目录内的 [MIT License](animated-2d-scene-skill/LICENSE)，许可范围为该目录。本案例验证了预渲染展示；包内的游戏接入指导需在具体项目运行时验证。
+
 ## 文件
 
 ```text
 index.html                 页面、样式和交互
 PROMPT.md                  制作流程与可复用提示词
+animated-2d-scene-skill/    开源制作手册、Codex Skill、模板与辅助脚本
 assets/scene.mp4            带背景音乐的游览视频
 assets/scene-poster.png     视频封面
 assets/windbell-valley.png  完整地图

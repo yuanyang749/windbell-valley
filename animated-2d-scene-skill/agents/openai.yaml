@@ -1,0 +1,4 @@
+interface:
+  display_name: "二维动画场景制作"
+  short_description: "复用参考图动画、遮罩合成、RIFE补帧与场景交付的已验证制作经验"
+  default_prompt: "请使用 $animated-2d-scene-skill，依据当前项目的展示或游戏目标制作并验证二维动画场景。"
